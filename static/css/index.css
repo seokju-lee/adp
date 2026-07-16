@@ -543,22 +543,233 @@ pre code {
   .adp-dataset-label { font-size: 0.78rem; padding: 0.4rem 0.5rem; }
 }
 
-/* Responsive: shrink padding on narrow screens */
+/* Narrow figure (teaser) — 60% desktop, 100% mobile */
+.adp-figure-narrow {
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Responsive layout
+   Global safety:
+   - prevent horizontal scroll on the whole page
+   - force all media/figures to respect container width
+   ============================================================ */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+img, video, iframe {
+  max-width: 100%;
+}
+
+/* Tablet and below (<=1023px) */
+@media (max-width: 1023px) {
+  .adp-figure-narrow {
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
+   Mobile (<=768px)  — the main fix
+   Bulma's .column.is-half stays 50% wide even in a stacked
+   column layout on mobile, which leaves half the row blank.
+   Force every .column to full width on mobile.
+   ============================================================ */
 @media (max-width: 768px) {
+
+  /* ---- FORCE full-width columns on mobile ---- */
+  .columns {
+    display: block !important;
+    margin: 0 !important;
+  }
+  .column,
+  .column.is-half,
+  .column.is-half-tablet,
+  .column.is-half-touch,
+  .column.is-half-desktop,
+  .column.is-one-third,
+  .column.is-two-thirds,
+  .column.is-three-quarters,
+  .column.is-one-quarter,
+  .column.is-four-fifths,
+  .column.is-three-fifths,
+  .column.is-two-fifths,
+  .column.is-one-fifth {
+    width: 100% !important;
+    flex: none !important;
+    padding: 0.4rem 0 !important;
+    margin: 0 !important;
+  }
+
+  /* ---- Container / section padding ---- */
+  .section {
+    padding: 1.75rem 0.75rem !important;
+  }
+  .hero-body {
+    padding: 1.75rem 0.75rem !important;
+  }
+  .adp-hero {
+    padding-top: 1.5rem;
+    padding-bottom: 0.25rem;
+  }
+  .container,
+  .container.is-max-desktop {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* ---- Titles ---- */
+  .title.is-2 {
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
+  }
+  .title.is-3 {
+    font-size: 1.3rem !important;
+  }
+  .title.is-5 {
+    font-size: 1.05rem !important;
+  }
+
+  /* ---- Hero: title, authors, buttons ---- */
+  .publication-title br { display: none; }
+  .publication-authors,
+  .publication-authors.is-size-5 {
+    font-size: 0.9rem !important;
+    line-height: 1.5;
+  }
+  .publication-authors.is-size-6 {
+    font-size: 0.8rem !important;
+  }
+  .publication-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+  .publication-links .link-block {
+    margin: 0 !important;
+  }
+  .publication-links .button.is-normal {
+    font-size: 0.75rem !important;
+    padding: 0.4rem 0.75rem !important;
+    height: auto !important;
+  }
+
+  /* ---- Metric cards: 2 x 2 grid ---- */
+  .adp-highlight-row {
+    gap: 0.5rem !important;
+  }
+  .adp-metric-card {
+    flex: 1 1 calc(50% - 0.35rem) !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 0.75rem 0.5rem !important;
+  }
+  .adp-metric-value  { font-size: 1.35rem; }
+  .adp-metric-label  { font-size: 0.76rem; }
+  .adp-metric-sub    { font-size: 0.66rem; }
+
+  /* ---- Figures ---- */
+  .adp-figure {
+    border-radius: 8px;
+    width: 100%;
+  }
+  .adp-figure img {
+    width: 100%;
+    height: auto;
+  }
+  .adp-figure-caption {
+    font-size: 0.82rem;
+    padding: 0 0.25rem;
+    line-height: 1.45;
+  }
+
+  /* ---- Video cards ---- */
+  .adp-video-card {
+    border-radius: 8px;
+  }
+  .adp-video-label {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.82rem;
+  }
+
+  /* ---- Tables ---- */
+  .adp-table-wrap {
+    padding: 0.85rem 0.6rem;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .adp-table-title { font-size: 0.9rem; }
   .adp-table {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
   .adp-table thead th,
   .adp-table tbody td {
-    padding: 0.4rem 0.3rem;
+    padding: 0.4rem 0.35rem;
   }
-  .adp-table-wrap {
-    padding: 0.9rem 0.6rem;
+  .adp-table tbody td {
+    white-space: normal;
   }
   .adp-table.adp-table-compact {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
   .adp-table.adp-table-compact thead th {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
   }
+  .adp-table.adp-table-compact tbody td:first-child {
+    white-space: normal;
+  }
+
+  /* ---- Dataset grid ---- */
+  .adp-dataset-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.6rem !important;
+  }
+  .adp-dataset-label {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.4rem;
+  }
+
+  /* ---- Bullet list, BibTeX ---- */
+  .adp-bullet-list li {
+    padding-left: 1.3rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .adp-bibtex-block pre {
+    font-size: 0.7rem;
+    padding: 0.7rem;
+    overflow-x: auto;
+  }
+
+  /* Section-title accent bar */
+  .adp-section-title::after {
+    width: 36px;
+    height: 2px;
+  }
+}
+
+/* Small phones (<=480px) */
+@media (max-width: 480px) {
+  .title.is-2 { font-size: 1.3rem !important; }
+  .title.is-3 { font-size: 1.15rem !important; }
+  .adp-metric-value { font-size: 1.15rem; }
+  .adp-metric-label { font-size: 0.7rem; }
+  .adp-metric-sub   { font-size: 0.62rem; }
+  .adp-conf-tag {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+  }
+  .publication-links .button.is-normal {
+    font-size: 0.72rem !important;
+    padding: 0.35rem 0.6rem !important;
+  }
+  .publication-links .button .icon {
+    margin-right: 2px !important;
+  }
+  .adp-dataset-grid { gap: 0.5rem !important; }
 }
