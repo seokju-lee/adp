@@ -623,9 +623,9 @@ img, video, iframe {
   }
 
   /* ---- Titles ---- */
+  /* keep hero title (.title.is-2) at Bulma default (2.5rem) so it reads big */
   .title.is-2 {
-    font-size: 1.5rem !important;
-    line-height: 1.25 !important;
+    line-height: 1.15 !important;
   }
   .title.is-3 {
     font-size: 1.3rem !important;
@@ -755,7 +755,6 @@ img, video, iframe {
 
 /* Small phones (<=480px) */
 @media (max-width: 480px) {
-  .title.is-2 { font-size: 1.3rem !important; }
   .title.is-3 { font-size: 1.15rem !important; }
   .adp-metric-value { font-size: 1.15rem; }
   .adp-metric-label { font-size: 0.7rem; }
