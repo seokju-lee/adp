@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="ADP: Adversarial Dynamics Priors for Physically Grounded Humanoid Locomotion">
+  <meta property="og:title" content="ADP: Adversarial Dynamics Priors for Physically Grounded Humanoid Locomotion"/>
+  <meta property="og:description" content="Adversarial Dynamics Priors (ADP) replace kinematic motion-style features with SRBD-derived dynamics features, enabling perturbation-resilient humanoid locomotion."/>
+  <meta property="og:url" content=""/>
+  <meta property="og:image" content="static/images/figure1.jpg" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="ADP: Adversarial Dynamics Priors for Physically Grounded Humanoid Locomotion">
+  <meta name="twitter:description" content="Perturbation-resilient humanoid locomotion via adversarial dynamics-feature regularization.">
+  <meta name="twitter:image" content="static/images/figure1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="humanoid, locomotion, adversarial motion priors, dynamics priors, reinforcement learning, perturbation recovery, ADP, AMP">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ADP: Adversarial Dynamics Priors for Physically Grounded Humanoid Locomotion</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+<!-- Hero: Title + authors + links -->
+<section class="hero adp-hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <span class="adp-conf-tag">Under Review</span>
+          <h1 class="title is-2 publication-title">
+            <span class="adp-brand">ADP</span>: Adversarial Dynamics Priors for<br>
+            Physically Grounded Humanoid Locomotion
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://seokju-lee.github.io" target="_blank">Seokju Lee</a>,</span>
+            <span class="author-block">Jeongtae Lee,</span>
+            <span class="author-block"><a href="https://jeonghyeoklim.github.io/" target="_blank">Jeonghyeok Lim</a>,</span>
+            <span class="author-block"><a href="https://jeonguk-kang.github.io/" target="_blank"></a>Jeonguk Kang</a>,</span>
+            <span class="author-block">Byungwook Lee,</span>
+            <span class="author-block">Seungho Han,</span>
+            <span class="author-block">Keun Ha Choi,</span>
+            <span class="author-block">Dongil Park,</span>
+            <span class="author-block">Kyung-Soo Kim</span>
+          </div>
+
+          <div class="is-size-6 publication-authors" style="margin-top:0.5rem;">
+            <span class="author-block">Mechatronics, Systems, and Control Laboratory, KAIST</span>
+          </div>
+
+          <div class="column has-text-centered" style="margin-top: 1.25rem;">
+            <div class="publication-links">
+              <!-- Paper PDF -->
+              <span class="link-block">
+                <a href="static/pdfs/ADP.pdf" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- arXiv -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2607.03454" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Summary video -->
+              <span class="link-block">
+                <a href="#summary-video"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span>
+                  <span>Video</span>
+                </a>
+              </span>
+
+              <!-- Code (placeholder) -->
+              <span class="link-block">
+                <a href="#" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark is-outlined">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code (coming soon)</span>
+                </a>
+              </span>
+
+              <!-- BibTeX anchor -->
+              <span class="link-block">
+                <a href="#BibTeX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>BibTeX</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser figure -->
+<section class="section" style="padding-top: 0.5rem;">
+  <div class="container is-max-desktop">
+    <div class="adp-figure" style="max-width: 60%; margin: 0 auto;">
+      <img src="static/images/figure1.png" alt="ADP teaser: dynamics-feature alignment for perturbation recovery" />
+    </div>
+    <p class="adp-figure-caption">
+      <strong>Dynamics-feature alignment for perturbation recovery.</strong>
+      An external push at <em>t<sub>2</sub></em> drives the humanoid's dynamics features away from the reference distribution.
+      ADP regularizes the perturbed windows back toward this distribution, restoring stable locomotion at <em>t<sub>3</sub></em>.
+    </p>
+  </div>
+</section>
+
+<!-- Highlight metrics -->
+<section class="section" style="padding-top: 0;">
+  <div class="container is-max-desktop">
+    <div class="adp-highlight-row">
+      <div class="adp-metric-card">
+        <div class="adp-metric-value">91.4%</div>
+        <div class="adp-metric-label">Success Rate</div>
+        <div class="adp-metric-sub">4-direction push, +18 pp vs AMP</div>
+      </div>
+      <div class="adp-metric-card">
+        <div class="adp-metric-value">+16.7%</div>
+        <div class="adp-metric-label">J<sub>80</sub> impulse threshold</div>
+        <div class="adp-metric-sub">vs. AMP baseline</div>
+      </div>
+      <div class="adp-metric-card">
+        <div class="adp-metric-value">−47.9%</div>
+        <div class="adp-metric-label">Recovery time</div>
+        <div class="adp-metric-sub">2.48s vs. 4.76s (AMP)</div>
+      </div>
+      <div class="adp-metric-card">
+        <div class="adp-metric-value">−35.4%</div>
+        <div class="adp-metric-label">Velocity tracking error</div>
+        <div class="adp-metric-sub">0.84 m/s vs. 1.30 m/s (AMP)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section class="section hero is-light adp-abstract">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 adp-section-title" style="text-align:center;">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              We propose <strong>Adversarial Dynamics Priors (ADP)</strong> for perturbation-resilient
+              humanoid locomotion control. Existing motion prior-based methods induce natural motion styles
+              by imitating <em>kinematic</em> motion features, but they do not directly regularize
+              <em>dynamics</em> features such as CoM motion, centroidal momentum, contact forces, and
+              contact states. To address this limitation, we replace the kinematic motion-style feature
+              with selected dynamics features extracted from locomotion trajectories as the target of
+              adversarial regularization.
+            </p>
+            <p>
+              We use trajectory optimization to construct a reference dataset and train a discriminator to
+              evaluate whether policy-induced temporal windows are consistent with the resulting reference
+              distribution. Without explicit motion tracking, ADP encourages policy rollouts to remain
+              close to the reference support, even after perturbations. Compared with AMP, the strongest
+              baseline in our evaluation, ADP improves the <em>80%-success impulse threshold</em>
+              (J<sub>80</sub>) by <strong>16.7%</strong>, while reducing direction-averaged recovery time
+              and velocity-tracking error by <strong>47.9%</strong> and <strong>35.4%</strong>,
+              respectively.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Summary video -->
+<section id="summary-video" class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 adp-section-title">Summary Video</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/GlEvvtuwn6c"
+                    title="ADP summary video"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+          </div>
+          <p class="adp-figure-caption">
+            Full summary video walking through the method, hardware demonstrations, and simulation ablations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Method overview -->
+<section class="section hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 adp-section-title">Method</h2>
+      <div class="content has-text-justified">
+        <p>
+          ADP consists of two stages. <strong>(a)</strong> Offline, we use SRBD-based trajectory optimization
+          to generate physically consistent locomotion trajectories and extract dynamics features — CoM
+          velocity, centroidal angular momentum, foot contact forces, and contact indicators — to build the
+          reference dynamics dataset <em>D<sub>dyn</sub></em>.
+          <strong>(b)</strong> During policy training, temporal dynamics-feature windows are computed from
+          policy rollouts and compared against <em>D<sub>dyn</sub></em> by a discriminator, whose output
+          becomes the adversarial dynamics prior reward <em>r<sub>t</sub><sup>D</sup></em>.
+        </p>
+      </div>
+
+      <div class="adp-figure">
+        <img src="static/images/overview.png" alt="ADP framework overview" />
+      </div>
+      <p class="adp-figure-caption">
+        <strong>ADP framework.</strong> (a) SRBD-based trajectory optimization generates reference locomotion
+        trajectories, from which dynamics features are extracted to construct <em>D<sub>dyn</sub></em>.
+        (b) During training, policy-generated windows are evaluated by a discriminator trained with
+        <em>D<sub>dyn</sub></em>, yielding the dynamics prior reward <em>r<sub>t</sub><sup>D</sup></em>.
+        The policy is trained jointly with the task reward, dynamics prior reward, and regularization terms.
+      </p>
+
+      <div style="margin-top: 2.5rem;">
+        <h3 class="title is-5">Key ingredients</h3>
+        <ul class="adp-bullet-list">
+          <li>
+            <strong>Adversarial dynamics priors.</strong> Replace kinematic motion-style features with
+            dynamics features (CoM motion, centroidal momentum, contact forces, contact states), avoiding
+            explicit reference-pose, phase, or end-effector tracking.
+          </li>
+          <li>
+            <strong>Perturbation-sensitive representation.</strong> A temporal dynamics-feature window
+            <em>Ξ<sub>t</sub></em> exposes post-push transients — contact switching, force modulation, and
+            momentum recovery — more directly than joint-level kinematic features.
+          </li>
+          <li>
+            <strong>SRBD-based reference generation.</strong> Trajectory optimization over the single-rigid-body
+            dynamics model produces reference dynamics samples that are physically grounded at the SRBD level
+            but do not impose full-body joint-tracking targets.
+          </li>
+        </ul>
+      </div>
+
+      <!-- SRBD reference dataset gallery -->
+      <div style="margin-top: 3rem;">
+        <h3 class="title is-5">Reference Locomotion Dataset <em>D</em><sub>dyn</sub></h3>
+        <p class="content has-text-justified" style="margin-bottom: 1.5rem;">
+          The reference set is generated by SRBD-based trajectory optimization over multiple locomotion
+          modes — forward walking, running, backward walking, lateral stepping, and turning — under
+          fixed linear and yaw velocity commands. From each trajectory we extract dynamics features
+          (CoM motion, centroidal momentum, contact forces, and binary contact indicators) that are
+          <em>physically grounded at the SRBD level</em> without imposing full-body joint-tracking targets.
+          The clips below show the resulting SRBD trajectories that populate <em>D</em><sub>dyn</sub>.
+        </p>
+        <div class="adp-dataset-grid">
+          <div class="adp-dataset-item">
+            <img src="static/gifs/g1_srbd_walk.gif" alt="SRBD walk trajectory" loading="lazy" />
+            <div class="adp-dataset-label">Forward Walk</div>
+          </div>
+          <div class="adp-dataset-item">
+            <img src="static/gifs/g1_srbd_run.gif" alt="SRBD run trajectory" loading="lazy" />
+            <div class="adp-dataset-label">Forward Run</div>
+          </div>
+          <div class="adp-dataset-item">
+            <img src="static/gifs/g1_srbd_backward.gif" alt="SRBD backward trajectory" loading="lazy" />
+            <div class="adp-dataset-label">Backward Walk</div>
+          </div>
+          <div class="adp-dataset-item">
+            <img src="static/gifs/g1_srbd_lateral_right.gif" alt="SRBD lateral stepping trajectory" loading="lazy" />
+            <div class="adp-dataset-label">Lateral Stepping</div>
+          </div>
+          <div class="adp-dataset-item">
+            <img src="static/gifs/g1_srbd_circle_ccw.gif" alt="SRBD turning CCW trajectory" loading="lazy" />
+            <div class="adp-dataset-label">Turn (CCW)</div>
+          </div>
+          <div class="adp-dataset-item">
+            <img src="static/gifs/g1_srbd_circle_cw.gif" alt="SRBD turning CW trajectory" loading="lazy" />
+            <div class="adp-dataset-label">Turn (CW)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Simulation comparison -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 adp-section-title">Simulation: Method Comparison</h2>
+    <div class="content has-text-justified">
+      <p>
+        We compare four policies under identical PPO settings, observations, actions, domain randomization,
+        and perturbation curriculum. The only difference is the imitation reward: no prior
+        (<span class="adp-tag vanilla">Vanilla RL</span>), point-wise dynamics matching
+        (<span class="adp-tag dyn">Dynamics Reward</span>), adversarial <em>kinematic</em> style
+        (<span class="adp-tag amp">AMP</span>), and adversarial <em>dynamics</em> priors
+        (<span class="adp-tag adp">ADP (ours)</span>).
+      </p>
+    </div>
+
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="adp-video-card">
+          <video autoplay controls muted loop playsinline poster="static/images/snapshot.jpg">
+            <source src="static/videos/demo_vanilla_rl.mp4?v=3" type="video/mp4">
+          </video>
+          <div class="adp-video-label">
+            <span class="adp-tag vanilla">Vanilla RL</span> Task rewards only
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="adp-video-card">
+          <video autoplay controls muted loop playsinline poster="static/images/snapshot.jpg">
+            <source src="static/videos/demo_dynamics_reward.mp4?v=3" type="video/mp4">
+          </video>
+          <div class="adp-video-label">
+            <span class="adp-tag dyn">Dynamics Reward</span> Point-wise dynamics matching
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="adp-video-card">
+          <video autoplay controls muted loop playsinline poster="static/images/snapshot.jpg">
+            <source src="static/videos/demo_amp_steer_to.mp4?v=3" type="video/mp4">
+          </video>
+          <div class="adp-video-label">
+            <span class="adp-tag amp">AMP</span> Adversarial Motion Prior
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="adp-video-card">
+          <video autoplay controls muted loop playsinline poster="static/images/snapshot.jpg">
+            <source src="static/videos/demo_adp.mp4?v=3" type="video/mp4">
+          </video>
+          <div class="adp-video-label">
+            <span class="adp-tag adp">ADP (ours)</span> Adversarial dynamics prior
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="adp-divider-light"></div>
+
+    <!-- Time-series plot -->
+    <div class="adp-figure">
+      <img src="static/images/push_recovery_timeseries.jpg"
+           alt="Time-series velocity tracking, base attitude, and angular velocity for the four methods." />
+    </div>
+    <p class="adp-figure-caption">
+      Time-series perturbation recovery under a lateral push. ADP (green) rapidly attenuates the transient
+      velocity and attitude errors within ~1–1.5 s, stabilizing velocity error below 0.2 m/s and attitude
+      error below 3°. AMP recovers velocity tracking but leaves under-damped residual attitude oscillations.
+    </p>
+
+    <div style="margin-top: 2.5rem;">
+      <div class="adp-table-wrap">
+        <div class="adp-table-title">
+          Table&nbsp;I &middot; Quantitative perturbation-recovery performance (4-direction pushes)
+        </div>
+        <table class="adp-table adp-table-compact">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Succ.<br>(%) <span class="adp-arrow">↑</span></th>
+              <th>J<sub>80</sub><br>(N·s) <span class="adp-arrow">↑</span></th>
+              <th>Recov.<br>(s) <span class="adp-arrow">↓</span></th>
+              <th>Vel.&nbsp;Err<br>(m/s) <span class="adp-arrow">↓</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vanilla RL</td>
+              <td>5.5</td>
+              <td>49.5</td>
+              <td>10.52</td>
+              <td>2.89</td>
+            </tr>
+            <tr>
+              <td>Dynamics Reward</td>
+              <td>14.1</td>
+              <td>66.0</td>
+              <td>9.73</td>
+              <td>2.68</td>
+            </tr>
+            <tr>
+              <td>AMP <span class="adp-cite">[12]</span></td>
+              <td>73.4</td>
+              <td>99.0</td>
+              <td>4.76</td>
+              <td>1.30</td>
+            </tr>
+            <tr class="adp-row-best">
+              <td>ADP (ours)</td>
+              <td><strong>91.4</strong></td>
+              <td><strong>115.5</strong></td>
+              <td><strong>2.48</strong></td>
+              <td><strong>0.84</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="adp-figure-caption" style="margin-top: 0.6rem;">
+          ADP achieves the highest success rate and J<sub>80</sub> while cutting recovery time by
+          <strong>47.9%</strong> and velocity error by <strong>35.4%</strong> versus AMP.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Real hardware demonstrations -->
+<section class="section hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 adp-section-title">Real-Robot Push Recovery</h2>
+      <div class="content has-text-justified">
+        <p>
+          We qualitatively evaluate ADP on a Unitree G1 humanoid under two disturbance regimes:
+          <em>instantaneous impulses</em> (single, sharp pushes) and <em>continuous pushes</em>
+          (prolonged, sustained force). We compare against AMP under the same reference-trajectory
+          source, so the difference isolates the effect of the dynamics prior versus the kinematic
+          motion-style prior.
+        </p>
+      </div>
+
+      <!-- Impulse push comparison -->
+      <h3 class="title is-5" style="margin-top: 1.5rem; margin-bottom: 1rem;">
+        Impulse pushes — AMP vs. ADP
+      </h3>
+      <div class="columns is-vcentered">
+        <div class="column is-half">
+          <div class="adp-video-card">
+            <video autoplay controls muted loop playsinline preload="metadata">
+              <source src="static/videos/amp_kick_mosaic.mp4?v=3" type="video/mp4">
+            </video>
+            <div class="adp-video-label">
+              <span class="adp-tag amp">AMP</span> Impulse push
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="adp-video-card">
+            <video autoplay controls muted loop playsinline preload="metadata">
+              <source src="static/videos/adp_kick_mosaic.mp4?v=3" type="video/mp4">
+            </video>
+            <div class="adp-video-label">
+              <span class="adp-tag adp">ADP (ours)</span> Impulse push
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Continuous push comparison -->
+      <h3 class="title is-5" style="margin-top: 2rem; margin-bottom: 1rem;">
+        Continuous pushes — AMP vs. ADP
+      </h3>
+      <div class="columns is-vcentered">
+        <div class="column is-half">
+          <div class="adp-video-card">
+            <video autoplay controls muted loop playsinline preload="metadata">
+              <source src="static/videos/amp_continuous_mosaic.mp4?v=3" type="video/mp4">
+            </video>
+            <div class="adp-video-label">
+              <span class="adp-tag amp">AMP</span> Continuous push
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="adp-video-card">
+            <video autoplay controls muted loop playsinline preload="metadata">
+              <source src="static/videos/adp_continuous_mosaic.mp4?v=3" type="video/mp4">
+            </video>
+            <div class="adp-video-label">
+              <span class="adp-tag adp">ADP (ours)</span> Continuous push
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Representation deviation -->
+<section class="section">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 adp-section-title">Why Dynamics Features?</h2>
+      <div class="content has-text-justified">
+        <p>
+          The dynamics-feature representation exposes perturbation-induced transients <em>earlier</em> and
+          <em>more strongly</em> than kinematic features. Under the same lateral push, the normalized
+          deviation in the dynamics space (<em>d<sub>dyn</sub>(t)</em>) reaches <strong>6.0×</strong> its
+          pre-push baseline within <strong>20 ms</strong>, whereas the kinematic representation
+          (<em>d<sub>kin</sub>(t)</em>) reaches only 4.3× with a 160 ms rise time. Impulses excite
+          floating-base momentum and contact forces <em>before</em> the effect is expressed through joint
+          kinematics, giving the discriminator a sharper training signal.
+        </p>
+      </div>
+
+      <div class="columns is-vcentered">
+        <div class="column is-half">
+          <div class="adp-video-card">
+            <video autoplay controls muted loop playsinline poster="static/images/why_dynamics_prior.jpg">
+              <source src="static/videos/whydynamics.mp4?v=2" type="video/mp4">
+            </video>
+            <div class="adp-video-label">
+              Deviation evolution — kinematic vs. dynamics representation
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="adp-table-wrap">
+            <div class="adp-table-title">
+              Table&nbsp;II &middot; Perturbation sensitivity — dynamics vs. kinematic
+            </div>
+            <table class="adp-table adp-table-compact">
+              <thead>
+                <tr>
+                  <th>Representation</th>
+                  <th>Peak<br>fold <span class="adp-arrow">↑</span></th>
+                  <th>Rise&nbsp;50%<br>(ms) <span class="adp-arrow">↓</span></th>
+                  <th>Post<br>AUC <span class="adp-arrow">↑</span></th>
+                  <th>Sep.<br>AUC <span class="adp-arrow">↑</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Kinematic</td>
+                  <td>4.3×</td>
+                  <td>160</td>
+                  <td>2.2</td>
+                  <td>0.98</td>
+                </tr>
+                <tr class="adp-row-best">
+                  <td>Dynamics <span class="adp-tag adp">ours</span></td>
+                  <td><strong>6.0×</strong></td>
+                  <td><strong>20</strong></td>
+                  <td><strong>3.9</strong></td>
+                  <td><strong>1.00</strong></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="adp-figure-caption" style="margin-top: 0.6rem;">
+              Under a lateral 3.0 m/s push, the dynamics representation reacts <strong>8×</strong> faster
+              and with a <strong>1.4×</strong> larger peak deviation than the kinematic representation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ablation -->
+<section class="section hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 adp-section-title">Ablations</h2>
+
+      <div class="columns is-vcentered">
+      <div class="column is-half">
+        <div class="adp-figure">
+          <img src="static/images/temporal_ablation.jpg"
+               alt="Effect of temporal window length K on recovery metrics." />
+        </div>
+        <p class="adp-figure-caption">
+          Effect of temporal window length <em>K</em>. <em>K</em>=8 provides the best trade-off between
+          temporal context and training stability (91.4% success, 2.48s recovery).
+        </p>
+      </div>
+      <div class="column is-half">
+        <div class="adp-table-wrap">
+          <div class="adp-table-title">
+            Table&nbsp;III &middot; Dynamics-feature component ablation
+          </div>
+          <table class="adp-table adp-table-compact">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Succ.<br>(%) <span class="adp-arrow">↑</span></th>
+                <th>Vel.&nbsp;Err<br>(m/s) <span class="adp-arrow">↓</span></th>
+                <th>Dyn.<br>Dist. <span class="adp-arrow">↓</span></th>
+                <th>Recov.<br>(s) <span class="adp-arrow">↓</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="adp-row-best">
+                <td>ADP (full)</td>
+                <td><strong>91.4</strong></td>
+                <td><strong>0.84</strong></td>
+                <td><strong>1.13</strong></td>
+                <td><strong>2.48</strong></td>
+              </tr>
+              <tr>
+                <td>w/o Momentum</td>
+                <td>45.3</td>
+                <td>1.92</td>
+                <td>3.04</td>
+                <td>6.74</td>
+              </tr>
+              <tr>
+                <td>w/o Contact Force</td>
+                <td>82.0</td>
+                <td>1.06</td>
+                <td>1.51</td>
+                <td>3.32</td>
+              </tr>
+              <tr>
+                <td>w/o Contact Indicator</td>
+                <td>30.5</td>
+                <td>2.36</td>
+                <td>3.82</td>
+                <td>8.82</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="adp-figure-caption" style="margin-top: 0.6rem;">
+            Removing binary contact indicators degrades success the most (91.4% → 30.5%), showing that
+            swing/stance transitions and contact timing carry the strongest alignment signal.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- BibTeX -->
+<section class="section adp-bibtex-block" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 adp-section-title">BibTeX</h2>
+    <pre><code>@article{lee2026adp,
+  title   = {ADP: Adversarial Dynamics Priors for Physically Grounded Humanoid Locomotion},
+  author  = {Lee, Seokju and Lee, Jeongtae and Lim, Jeonghyeok and Kang, Jeonguk and
+             Lee, Byungwook and Han, Seungho and Choi, Keun Ha and Park, Dongil and Kim, Kyung-Soo},
+  journal = {arXiv preprint arXiv:2607.03454},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the
+            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic
+            Project Page Template</a> which was adopted from the
+            <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            The website is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+static/videos/_original_hevc/
+static/videos/_original_demo/
+figure/
+g1_srbd_*.gif
+*.pdf.tmp
+.DS_Store
