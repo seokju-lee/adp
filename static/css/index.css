@@ -121,6 +121,17 @@ body {
   font-size: smaller;
 }
 
+.adp-author-note {
+  margin-top: 0.4rem;
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.adp-author-note sup {
+  color: #1f7a8c;
+  font-weight: 600;
+}
+
 /* --- ADP custom styles --- */
 .adp-hero {
   background: linear-gradient(180deg, #f7fbfd 0%, #ffffff 100%);
